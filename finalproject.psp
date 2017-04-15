@@ -5,17 +5,6 @@
 <%@ plsql parameter="p_fromdt" default="NULL" %>
 <%@ plsql parameter="p_todt" default="NULL" %>
 <%@ plsql parameter="p_genre" default="NULL" %>
-<% CREATE OR REPLACE PROCEDURE QUERY_EVENTS(
-q_name IN VARCHAR2,
-q_location IN VARCHAR2,
-q_fromdt IN VARCHAR2,
-q_todt IN VARCHAR2,
-q_genre IN VARCHAR2
-)
-AS
-BEGIN
-END;
-%>
 <html>
 	<head>
 		<title>Music Events</title>
