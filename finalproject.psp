@@ -1,0 +1,66 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="finalproject" %>
+<%@ plsql parameter="p_name" default="NULL" %>
+<%@ plsql parameter="p_location" default="NULL" %>
+<%@ plsql parameter="p_fromdt" default="NULL" %>
+<%@ plsql parameter="p_todt" default="NULL" %>
+<%@ plsql parameter="p_genre" default="NULL" %>
+<% CREATE OR REPLACE PROCEDURE QUERY_EVENTS(
+q_name IN VARCHAR2,
+q_location IN VARCHAR2,
+q_fromdt IN VARCHAR2,
+q_todt IN VARCHAR2,
+q_genre IN VARCHAR2
+)
+AS
+BEGIN
+END;
+%>
+<html>
+	<head>
+		<title>Music Events</title>
+	</head>
+	<body>
+		<h1>Music Events</h1>
+		<form method="post" action="finalproject">
+			<input type="submit" name="p_query" value="Query"><br>
+			<table>
+				<tr>
+					<td>Name:</td>
+					<td><input type="text" name="p_name"></td>
+				</tr>
+				<tr>
+					<td>Location:</td>
+					<td><input type="text" name="p_location"></td>
+				</tr>
+				<tr>
+					<td>From Date/Time:</td>
+					<td><input type="text" name="p_fromdt"></td>
+				</tr>
+				<tr>
+					<td>To Date/Time:</td>
+					<td><input type="text" name="p_todt"></td>
+				</tr>
+				<tr>
+					<td>Genre:</td>
+					<td>
+						<select name="p_genre">
+							<option value="null">N/A</option>
+							<option value="Alternative">Alternative</option>
+							<option value="Blues">Blues</option>
+							<option value="Classical">Classical</option>
+							<option value="Dance">Dance</option>
+							<option value="Electronic">Electronic</option>
+							<option value="HipHop">Hip Hop</option>
+							<option value="Indie">Indie</option>
+							<option value="Jazz">Jazz</option>
+							<option value="Pop">Pop</option>
+							<option value="Rap">Rap</option>
+							<option value="Rock">Rock</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>
