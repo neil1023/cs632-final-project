@@ -1,39 +1,36 @@
 <%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
 <%@ plsql procedure="finalproject" %>
-<%@ plsql parameter="p_name" default="NULL" %>
-<%@ plsql parameter="p_location" default="NULL" %>
-<%@ plsql parameter="p_fromdt" default="NULL" %>
-<%@ plsql parameter="p_todt" default="NULL" %>
-<%@ plsql parameter="p_genre" default="NULL" %>
 <html>
 	<head>
 		<title>Music Events</title>
+		<meta http-equiv="Content-Type" content="text/html">
 	</head>
 	<body>
 		<h1>Music Events</h1>
-		<form method="post" action="finalproject">
-			<input type="submit" name="p_query" value="Query"><br>
+		<!-- <form method=""> -->
+			<input type="submit" id="queryBtn" name="p_query" value="Query"><br>
 			<table>
 				<tr>
 					<td>Name:</td>
-					<td><input type="text" name="p_name"></td>
+					<td><input type="text" id="pNameInput" name="p_name"></td>
 				</tr>
 				<tr>
 					<td>Location:</td>
-					<td><input type="text" name="p_location"></td>
+					<td><input type="text" id="pLocationInput" name="p_location"></td>
 				</tr>
 				<tr>
 					<td>From Date/Time:</td>
-					<td><input type="text" name="p_fromdt"></td>
+					<td><input type="text" id="pFromdtInput" name="p_fromdt"></td>
 				</tr>
 				<tr>
 					<td>To Date/Time:</td>
-					<td><input type="text" name="p_todt"></td>
+					<td><input type="text" id="pTodtInput" name="p_todt"></td>
 				</tr>
 				<tr>
 					<td>Genre:</td>
 					<td>
-						<select name="p_genre">
+						<select name="p_genre" id="pGenreInput">
 							<option value="null">N/A</option>
 							<option value="Alternative">Alternative</option>
 							<option value="Blues">Blues</option>
@@ -50,6 +47,33 @@
 					</td>
 				</tr>
 			</table>
-		</form>
+		<!-- </form> -->
+		<div id="resultsTable">
+		</div>
+
+		<script type="text/javascript">
+			var queryBtn = document.getElementById("queryBtn");
+			queryBtn.addEventListener("click", function() {
+				var pNameInput = document.getElementById("pNameInput").value;
+				var pLocationInput = document.getElementById("pLocationInput").value;
+				var pFromdtInput = document.getElementById("pFromdtInput").value;
+				var pTodtInput = document.getElementById("pTodtInput").value;
+				var pGenreInput = document.getElementById("pGenreInput").value;
+
+				alert(pNameInput);
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						document.getElementById("resultsTable").innerHTML = this.responseText;
+					}
+				};
+				
+				xhttp.open("POST", "query_events", true);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+			
+				var parameterString = "p_name=" + pNameInput + "&p_location=" + pLocationInput + "&p_fromdt=" + pFromdtInput + "&p_todt=" + pTodtInput + "&p_genre=" + pGenreInput;
+				xhttp.send(parameterString);
+			});
+		</script>
 	</body>
 </html>
