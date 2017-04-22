@@ -31,7 +31,7 @@
 					<td>Genre:</td>
 					<td>
 						<select name="p_genre" id="pGenreInput">
-							<option value="null">N/A</option>
+							<option value="">N/A</option>
 							<option value="Alternative">Alternative</option>
 							<option value="Blues">Blues</option>
 							<option value="Classical">Classical</option>
@@ -60,7 +60,6 @@
 				var pTodtInput = document.getElementById("pTodtInput").value;
 				var pGenreInput = document.getElementById("pGenreInput").value;
 
-				alert(pNameInput);
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {

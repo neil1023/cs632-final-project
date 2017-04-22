@@ -1,36 +1,117 @@
 <%@ page language="PL/SQL" %>
 <%@ page contentType="text/html" %>
 <%@ plsql procedure="query_events" %>
-<%@ plsql parameter="p_name" default="NULL" %>
-<%@ plsql parameter="p_location" default="NULL" %>
-<%@ plsql parameter="p_fromdt" default="NULL" %>
-<%@ plsql parameter="p_todt" default="NULL" %>
-<%@ plsql parameter="p_genre" default="NULL" %>
+<%@ plsql parameter="p_name" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_location" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_fromdt" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_todt" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_genre" type="VARCHAR2" default="NULL" %>
 <%!
 	CURSOR C IS 
 	SELECT * FROM
 	MUSIC_EVENTS
-	WHERE NAME=p_name AND
-	LOCATION=p_location AND
-	GENRE=p_genre;
+	WHERE NAME LIKE 'p_name' AND
+	LOCATION LIKE 'p_location' AND
+	GENRE LIKE 'p_genre';
+
+	query_stmt VARCHAR2(300);
+	andable BOOLEAN;
+	TYPE EventCurTyp IS REF CURSOR;
+	event_cv EventCurTyp;
+	--rec EventCurTyp%rowtype;
+	rec music_events%rowtype;
 %>
 <html>
 	<head>
 		<title>Music Events</title>
-		<meta http-equiv="Content-Type" content="application/json">
+		<meta http-equiv="Content-Type" content="text/html">
 	</head>
 	<body>
-		{
-			"records": [
-		<% FOR rec in C LOOP %>
-				{
-					"name": <%= rec.NAME %>,
-					"location": <%= rec.LOCATION %>,
-					"date_time": <%= to_char(rec.DATE_TIME) %>,
-					"genre": <%= rec.GENRE %>
-				},
-		<% END LOOP; %>
-			]
-		}
+<%--
+	query_stmt := 'SELECT * FROM MUSIC_EVENTS';
+	IF (p_name IS NOT NULL or p_location IS NOT NULL or p_fromdt IS NOT NULL or p_todt IS NOT NULL or p_genre IS NOT NULL) THEN
+        query_stmt := query_stmt || ' WHERE';
+        IF (p_name IS NOT NULL) THEN
+            query_stmt := query_stmt || ' name LIKE ''' || p_name || '%''';
+            andable := true;
+        END IF;
+
+        IF (p_location IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' location LIKE ''' || p_location || '\%''';
+            andable := true;
+        END IF;
+
+        IF (p_fromdt IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' date_time>' || TO_DATE( || '''' || p_fromdt || '''', 'MM/DD/YYYY HH:MI:SS');
+            andable := true;
+        END IF;
+
+        IF (p_todt IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' date_time<' || TO_DATE( || '''' || p_todt || '''', 'MM/DD/YYYY HH:MI:SS');
+		END IF;
+
+		IF (p_genre IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' genre LIKE ''' || p_genre || '\%''';
+            andable := true;
+        END IF;
+	END IF;
+	query_stmt := query_stmt || ';';
+--%>
+<%
+	query_stmt := 'SELECT * FROM MUSIC_EVENTS';
+	IF ((p_name IS NOT NULL) or (p_location IS NOT NULL) or (p_fromdt IS NOT NULL) or (p_todt IS NOT NULL) or (p_genre IS NOT NULL)) THEN
+        query_stmt := query_stmt || ' WHERE';
+        IF (p_name IS NOT NULL) THEN
+            query_stmt := query_stmt || ' NAME LIKE ''' || p_name || '%''';
+            andable := true;
+        END IF;
+
+        IF (p_location IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' LOCATION LIKE ''' || p_location || '\%''';
+            andable := true;
+        END IF;
+		
+        IF (p_fromdt IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' DATE_TIME > TO_DATE(''' || p_fromdt || ''', ''MM/DD/YYYY HH:MI:SS'')';
+            andable := true;
+        END IF;
+
+        IF (p_todt IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' DATE_TIME < TO_DATE(''' || p_todt || ''', ''MM/DD/YYYY HH:MI:SS'')';
+            andable := true;
+        END IF;
+
+		IF (p_genre IS NOT NULL) THEN
+            IF (andable) THEN
+                query_stmt := query_stmt || ' AND';
+            END IF;
+            query_stmt := query_stmt || ' genre LIKE ''' || p_genre || '\%''';
+            andable := true;
+        END IF;
+	END IF;
+	query_stmt := query_stmt || ';';
+%>
+<%= query_stmt %>
 	</body>
 </html>

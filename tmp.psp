@@ -1,0 +1,31 @@
+IF (p_name IS NOT NULL or p_location IS NOT NULL or p_fromdt IS NOT NULL or p_todt IS NOT NULL or p_genre IS NOT NULL) THEN
+        query_stmt := query_stmt + ' WHERE';
+        IF (p_name IS NOT NULL) THEN
+            query_stmt := query_stmt + ' name LIKE ''' + p_name + '%''';
+            andable := true;
+        END IF;
+
+        IF (p_location is not null) then
+            IF (andable) then
+                query_stmt := query_stmt + ' AND';
+            END IF;
+            query_stmt := query_stmt + ' location LIKE ''' + p_location + '\%''';
+            andable := true;
+        END IF;
+
+        IF (p_fromdt is not null) then
+            IF (andable) then
+                query_stmt := query_stmt + ' AND';
+            END IF;
+            query_stmt := query_stmt + ' date_time>' + TO_DATE( + '''' + p_fromdt + '''', 'MM/DD/YYYY HH:MI:SS');
+            andable := true;
+        END IF;
+
+        IF (p_todt is not null) then
+            IF (andable) then
+                query_stmt := query_stmt + ' AND';
+            END IF;
+            query_stmt := query_stmt + ' date_time<' + TO_DATE( + '''' + p_todt + '''', 'MM/DD/YYYY HH:MI:SS');
+
+
+OPEN v_event_cursor FOR query_stmt USING 'MANAGER';
