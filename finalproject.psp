@@ -9,8 +9,13 @@
 
 		<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
 		<link rel="stylesheet prefetch" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
 
 		<style>
+			h1 {
+				font-family: 'Arvo', sans-serif; 
+			}
+
 			.buttonBar {
 				padding-left: 10px;
 			}
@@ -82,7 +87,9 @@
 			</table>
 		</div>
 		
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+    	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
     	<script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
@@ -97,19 +104,48 @@
 				var pGenreInput = $("#pGenreInput").val() == null ? "" : $("#pGenreInput").val();
 
 				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						// document.getElementById("resultsTable").innerHTML = this.responseText;
-						this.responseText = this.responseText.trim();
-						table.ajax.url($.parseJSON(this.responseText)).load();
-					}
-				};
+				// xhttp.onreadystatechange = function() {
+				// 	if (this.readyState == 4 && this.status == 200) {
+				// 		// document.getElementById("resultsTable").innerHTML = this.responseText;
+				// 		this.responseText = this.responseText.trim();
+				// 		// table.ajax.url($.parseJSON(this.responseText)).load();
+				// 	}
+				// };
 				
 				xhttp.open("POST", "query_events", true);
 				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
 
 				var parameterString = "p_name=" + pNameInput + "&p_location=" + pLocationInput + "&p_fromdt=" + pFromdtInput + "&p_todt=" + pTodtInput + "&p_genre=" + pGenreInput;
-				xhttp.send(parameterString);
+				// xhttp.send(parameterString);
+				// table.ajax.url(parameterString).load();
+				var dataUrl = "query_events?" + parameterString;
+				var datatable = $('#datatable').dataTable().api();
+				datatable.ajax.url(dataUrl).load();
+				// $.ajax({
+				// 	type: "POST",
+				// 	url: dataUrl,
+				// 	dataType: "json",
+				//     success : function(data, textStatus, jqXHR) {
+				//         // var table_data = JSON.parse(data);
+				//     	var datatable = $('#datatable').dataTable().api();
+				//     	datatable.ajax.url(dataUrl).load();
+				// 		datatable.clear();
+				// 		datatable.rows.add(data);
+				// 		datatable.draw(); 
+				// 		// var table = $('#datatable').DataTable({
+				//         //    data: data
+				// 		// }); 
+				//     }
+				// })
+				// .done(function() {
+				// 	alert("success");
+				// })
+				// .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+				// 	alert("error: " + errorThrown);
+				// })
+				// .always(function() {
+				// 	alert("complete");
+				// });
 			});
 
 			$(document).ready(function() {
@@ -121,7 +157,18 @@
 				});
 
 				table = $('#datatable').dataTable({
-					"ajax": "",
+					ajax: {
+						url: 'query_events',
+						dataSrc: 'records',
+						type: "POST"
+					},
+					columns: [
+						{ data: 'name' },
+						{ data: 'location' },
+						{ data: 'description' },
+						{ data: 'date_time' },
+				        { data: 'genre' },
+				    ],
 					"oLanguage": {
 						"sStripClasses": "",
 						"sSearch": "",
