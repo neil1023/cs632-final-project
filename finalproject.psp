@@ -46,13 +46,13 @@
 						</div>
 						<div class="input-field col s4">
 							<select name="p_genre" id="pGenreInput">
-								<option value="" disabled selected>Choose your option</option>
+								<option value="" selected>Choose your option</option>
 								<option value="Alternative">Alternative</option>
 								<option value="Blues">Blues</option>
 								<option value="Classical">Classical</option>
 								<option value="Dance">Dance</option>
 								<option value="Electronic">Electronic</option>
-								<option value="HipHop">Hip Hop</option>
+								<option value="Hip Hop">Hip Hop</option>
 								<option value="Indie">Indie</option>
 								<option value="Jazz">Jazz</option>
 								<option value="Pop">Pop</option>
@@ -103,49 +103,12 @@
 				var pTodtInput = $("#pTodtInput").val();
 				var pGenreInput = $("#pGenreInput").val() == null ? "" : $("#pGenreInput").val();
 
-				var xhttp = new XMLHttpRequest();
-				// xhttp.onreadystatechange = function() {
-				// 	if (this.readyState == 4 && this.status == 200) {
-				// 		// document.getElementById("resultsTable").innerHTML = this.responseText;
-				// 		this.responseText = this.responseText.trim();
-				// 		// table.ajax.url($.parseJSON(this.responseText)).load();
-				// 	}
-				// };
-				
-				xhttp.open("POST", "query_events", true);
-				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
-
 				var parameterString = "p_name=" + pNameInput + "&p_location=" + pLocationInput + "&p_fromdt=" + pFromdtInput + "&p_todt=" + pTodtInput + "&p_genre=" + pGenreInput;
-				// xhttp.send(parameterString);
-				// table.ajax.url(parameterString).load();
+
 				var dataUrl = "query_events?" + parameterString;
+
 				var datatable = $('#datatable').dataTable().api();
 				datatable.ajax.url(dataUrl).load();
-				// $.ajax({
-				// 	type: "POST",
-				// 	url: dataUrl,
-				// 	dataType: "json",
-				//     success : function(data, textStatus, jqXHR) {
-				//         // var table_data = JSON.parse(data);
-				//     	var datatable = $('#datatable').dataTable().api();
-				//     	datatable.ajax.url(dataUrl).load();
-				// 		datatable.clear();
-				// 		datatable.rows.add(data);
-				// 		datatable.draw(); 
-				// 		// var table = $('#datatable').DataTable({
-				//         //    data: data
-				// 		// }); 
-				//     }
-				// })
-				// .done(function() {
-				// 	alert("success");
-				// })
-				// .fail(function(XMLHttpRequest, textStatus, errorThrown) {
-				// 	alert("error: " + errorThrown);
-				// })
-				// .always(function() {
-				// 	alert("complete");
-				// });
 			});
 
 			$(document).ready(function() {
@@ -160,7 +123,7 @@
 					ajax: {
 						url: 'query_events',
 						dataSrc: 'records',
-						type: "POST"
+						type: 'POST'
 					},
 					columns: [
 						{ data: 'name' },
