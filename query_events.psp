@@ -74,7 +74,7 @@
 			"name": "' || rec.NAME || '",
 			"location": "' || rec.LOCATION || '",
 			"description": "' || rec.DESCRIPTION || '",
-			"date_time": "' || to_char(rec.DATE_TIME, 'MM/DD/YYYY HH:MI AM') || '",
+			"date_time": "' || to_char(rec.DATE_TIME, 'MM/DD/YYYY HH24:MI') || '",
 			"genre": "' || rec.GENRE || '"
 		},';
 	END LOOP;

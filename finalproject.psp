@@ -260,11 +260,6 @@
 			div.material-table table td:first-child {
 				padding: 0 0 0 24px;
 			}
-
-			div.material-table table th:last-child,
-			div.material-table table td:last-child {
-				padding: 0 14px 0 0;
-			}
 		</style>
 	</head>
 	<body>
