@@ -1,0 +1,25 @@
+<%@ page language="PL/SQL" %>
+<%@ page contentType="application/json" %>
+<%@ plsql procedure="create_event" %>
+<%@ plsql parameter="p_name" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_location" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_date" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_dt_hour" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_dt_minute" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_dt_am_pm" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_description" type="VARCHAR2" default="NULL" %>
+<%@ plsql parameter="p_genre" type="VARCHAR2" default="NULL" %>
+<%!
+	insert_stmt VARCHAR2(1000);
+%>
+<%
+	insert_stmt := 'INSERT INTO MUSIC_EVENTS VALUES(
+	-1, 
+	''' || p_name || ''',
+	''' || p_location || ''',
+	TO_DATE(''' || p_date || ' ' || p_dt_hour || ':' || p_dt_minute || ' ' || p_dt_am_pm || ''', ''DD MONTH, YYYY HH12:MI PM''),
+	''' || p_genre || ''',
+	''' || p_description || '''
+	)';
+	EXECUTE IMMEDIATE insert_stmt;
+%>

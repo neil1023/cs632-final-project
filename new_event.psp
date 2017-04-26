@@ -1,0 +1,177 @@
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="new_event" %>
+<html>
+	<head>
+		<title>Music Events</title>
+		<meta http-equiv="Content-Type" content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+		<link rel="stylesheet prefetch" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+
+		<style>
+			body {
+				background: #FAFAFA;
+			}
+
+			h1 {
+				font-family: 'Arvo', sans-serif; 
+			}
+
+			h1 span {
+				color: #ddd;
+			}
+
+			.buttonBar {
+				padding-left: 10px;
+			}
+
+			label {
+				width: 100%;
+			}
+
+			label:after {
+				-moz-transition-property: all !important;
+				-o-transition-property: all !important;
+				-webkit-transition-property: all !important;
+				transition-property: all !important;
+				font-size: 0.8rem;
+				-moz-transform: none;
+				-ms-transform: none;
+				-o-transform: none;
+				-webkit-transform: none;
+				transform: none;
+			}
+
+			label:not(.active):after {
+				-moz-transform: translateY(-140%);
+				-ms-transform: translateY(-140%);
+				-o-transform: translateY(-140%);
+				-webkit-transform: translateY(-140%);
+				transform: translateY(-140%);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Music Events <span>[Create Event]</span></h1>
+			<div class="row buttonBar">
+				<a class="waves-effect waves-light btn grey darken-1" id="backBtn" name="p_back" href="finalproject"><i class="material-icons left">arrow_back</i>Back</a>
+			</div>
+			<form id="createEventForm" action="create_event">
+				<div class="row">
+					<div class="input-field col s6">
+						<input type="text" id="pNameInput" name="p_name" class="validate" required>
+						<label for="p_name">Event Name *</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input type="text" id="pLocationInput" name="p_location" class="validate" required>
+						<label for="pLocationInput">Location *</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input type="date" id="pDtInput" name="p_date" class="datepicker" class="validate" required>
+						<label for="pDtInput">Date *</label>
+					</div>
+					<div class="input-field col s2">
+						<select name="p_dt_hour" id="pDtHour">
+							<option value="01">01</option>
+							<option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+							<option value="05">05</option>
+							<option value="06">06</option>
+							<option value="07">07</option>
+							<option value="08">08</option>
+							<option value="09">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+					</div>
+					<div class="input-field col s2">
+						<select name="p_dt_minute" id="pDtMinute">
+							<option value="00">00</option>
+							<option value="05">05</option>
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="30">30</option>
+							<option value="35">35</option>
+							<option value="40">40</option>
+							<option value="45">45</option>
+							<option value="50">50</option>
+							<option value="55">55</option>
+						</select>
+					</div>
+					<div class="input-field col s2">
+						<select name="p_dt_am_pm" id="pDtAMPM">
+							<option value="AM">AM</option>
+							<option value="PM">PM</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<textarea id="pDescription" name="p_description" class="materialize-textarea" data-length="160"></textarea>
+						<label for="pDescription">Description</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s4">
+						<select name="p_genre" id="pGenreInput">
+							<option value="" selected>Choose your option</option>
+							<option value="Alternative">Alternative</option>
+							<option value="Blues">Blues</option>
+							<option value="Classical">Classical</option>
+							<option value="Dance">Dance</option>
+							<option value="Electronic">Electronic</option>
+							<option value="Hip Hop">Hip Hop</option>
+							<option value="Indie">Indie</option>
+							<option value="Jazz">Jazz</option>
+							<option value="Pop">Pop</option>
+							<option value="Rap">Rap</option>
+							<option value="Rock">Rock</option>
+						</select>
+						<label>Genre</label>
+					</div>
+				</div>
+				<div class="row">
+					<span>* = Required</span>
+				</div>
+				<div class="row">
+					<input class="submit btn" type="submit" value="Submit"> 
+				</div>
+			</form>
+		</div>
+
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+
+		<script>
+			$(document).ready(function() {
+				$('select').material_select();
+
+				$('.datepicker').pickadate({
+					selectMonths: true, // Creates a dropdown to control month
+					selectYears: 15 // Creates a dropdown of 15 years to control year
+				});
+
+				$('form').validate({
+					errorClass: 'invalid',
+					errorPlacement: function(error, element) {
+						element.next("label").attr("data-error", error.contents().text());
+						element.next("label").attr("data-error", "This field is required.");
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
