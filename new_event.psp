@@ -17,7 +17,11 @@
 			}
 
 			h1 {
-				font-family: 'Arvo', sans-serif; 
+				font-family: 'Arvo', sans-serif;
+			}
+
+			h1 a {
+				color: rgba(0,0,0,0.87) !important;
 			}
 
 			h1 span {
@@ -56,7 +60,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1>Music Events <span>[Create Event]</span></h1>
+			<h1><a href="finalproject">Music Events</a> <span>[Create Event]</span></h1>
 			<div class="row buttonBar">
 				<a class="waves-effect waves-light btn grey darken-1" id="backBtn" name="p_back" href="finalproject"><i class="material-icons left">arrow_back</i>Back</a>
 			</div>
@@ -87,7 +91,7 @@
 							<option value="05">05</option>
 							<option value="06">06</option>
 							<option value="07">07</option>
-							<option value="08">08</option>
+							<option value="08" selected>08</option>
 							<option value="09">09</option>
 							<option value="10">10</option>
 							<option value="11">11</option>
@@ -113,7 +117,7 @@
 					<div class="input-field col s2">
 						<select name="p_dt_am_pm" id="pDtAMPM">
 							<option value="AM">AM</option>
-							<option value="PM">PM</option>
+							<option value="PM" selected>PM</option>
 						</select>
 					</div>
 				</div>

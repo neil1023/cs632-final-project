@@ -19,7 +19,7 @@
 	TYPE EventCurTyp IS REF CURSOR;
 	event_cv EventCurTyp;
 	rec music_events%rowtype;
-	result_json VARCHAR2(1000);
+	result_json VARCHAR2(25000);
 %>
 <%
 	query_stmt := 'SELECT * FROM MUSIC_EVENTS';
@@ -74,7 +74,7 @@
 			"name": "' || rec.NAME || '",
 			"location": "' || rec.LOCATION || '",
 			"description": "' || rec.DESCRIPTION || '",
-			"date_time": "' || to_char(rec.DATE_TIME, 'MM/DD/YYYY HH24:MI', 'nls_date_language=american') || '",
+			"date_time": "' || to_char(rec.DATE_TIME, 'MM/DD/YYYY HH:MI PM', 'nls_date_language=american') || '",
 			"genre": "' || rec.GENRE || '"
 		},';
 	END LOOP;

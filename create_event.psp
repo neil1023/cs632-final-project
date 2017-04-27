@@ -1,5 +1,5 @@
 <%@ page language="PL/SQL" %>
-<%@ page contentType="application/json" %>
+<%@ page contentType="text/html" %>
 <%@ plsql procedure="create_event" %>
 <%@ plsql parameter="p_name" type="VARCHAR2" default="NULL" %>
 <%@ plsql parameter="p_location" type="VARCHAR2" default="NULL" %>
@@ -23,3 +23,48 @@
 	)';
 	EXECUTE IMMEDIATE insert_stmt;
 %>
+<html>
+	<head>
+		<title>Music Events</title>
+		<meta http-equiv="Content-Type" content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+		<link rel="stylesheet prefetch" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+
+		<style>
+			body {
+				background: #FAFAFA;
+			}
+
+			h1 {
+				font-family: 'Arvo', sans-serif;
+			}
+
+			h1 a {
+				color: rgba(0,0,0,0.87) !important;
+			}
+
+			h1 span {
+				color: #ddd;
+			}
+
+			.buttonBar, .success-text {
+				padding-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1><a href="finalproject">Music Events</a> <span>[Success]</span></h1>
+			<div class="row buttonBar">
+				<a class="waves-effect waves-light btn grey darken-1" id="backBtn" name="p_back" href="new_event"><i class="material-icons left">arrow_back</i>Back to Create Page</a>
+				<a class="waves-effect waves-light btn" id="homeBtn" name="p_home" href="finalproject">Home Page</a>
+			</div>
+			<div class="row success-text">
+				<span>Your event was successfully created!</span>
+			</div>
+		</div>
+	</body>
+</html>
