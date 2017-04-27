@@ -1,6 +1,6 @@
 # CS632 Final Project
 
-I compile and run the PSP file using the following command:
+I compile and run the PSP file using the following commands:
 ```bash
 loadpsp -replace -user {username}/{password}@{hostname} finalproject.psp
 loadpsp -replace -user {username}/{password}@{hostname} query_events.psp
